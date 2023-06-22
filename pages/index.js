@@ -1,14 +1,23 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function IndexPage({results}) {
+const router = useRouter();
+const onNavigate =(name) => {
+  router.push({
+    pathname: `/list/${name}`,
+    query : {
+      name
+    }
+  })
+}
 
-console.log(results[0])
   return <div>
 <h1>The New York Times Best Seller Explorer</h1>
 
 <div className="book_list">
 {results?.map((book) => (
-<Link className="book_name" href={`/list/[id]`}>{book["display_name"]} ➡️ </Link>
+<Link onClick={()=> onNavigate(book["list_name_encoded"])} className="book_name" href={`/list/${book.list_name_encoded}`}>{book["display_name"]} ➡️ </Link>
 ))}
 </div>
 <style jsx global>{`
@@ -29,6 +38,11 @@ console.log(results[0])
   padding: 15px 10px;
   margin-bottom: 10px;
   box-shadow: 5px 5px 10px #bdc3c7;
+}
+.book_name:hover {
+  background-color: #22a6b3 ;
+  color: #FFFFFF;
+  transition: all 0.5s ease-out;
 }
   
   `}</style>
