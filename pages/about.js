@@ -9,12 +9,11 @@ export default function About() {
             </div>
 
             <style jsx>{`
-                .content {
+                .content {       
                        max-width: 700px; 
                        margin: 0 auto;
                        padding: 40px 30px;
-                       border: 2px solid #bdc3c7;
-                       border-top: none;
+                       margin-top: 30px;
                        box-shadow: 5px 5px 30px #bdc3c7;
                 }
                 h2 {
