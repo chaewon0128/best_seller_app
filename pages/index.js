@@ -1,15 +1,12 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function IndexPage({results}) {
 const router = useRouter();
-const onNavigate =(name) => {
+const onNavigate =(encodeName, title) => {
   router.push({
-    pathname: `/list/${name}`,
-    query : {
-      name
+    pathname: `/list/${title}/${encodeName}`,
     }
-  })
+  )
 }
 
   return <div>
@@ -17,9 +14,11 @@ const onNavigate =(name) => {
 
 <div className="book_list">
 {results?.map((book) => (
-<Link onClick={()=> onNavigate(book["list_name_encoded"])} className="book_name" href={`/list/${book.list_name_encoded}`}>{book["display_name"]} ➡️ </Link>
+<div key={book["list_name_encoded"]} onClick={()=> onNavigate(book["list_name_encoded"], book["display_name"])} className="book_name" >{book["display_name"]} ➡️ </div>
 ))}
 </div>
+
+
 <style jsx global>{`
   h1 {
     margin-top: 10px;
