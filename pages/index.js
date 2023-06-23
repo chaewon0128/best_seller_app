@@ -37,6 +37,7 @@ const onNavigate =(encodeName, title) => {
   padding: 15px 10px;
   margin-bottom: 10px;
   box-shadow: 5px 5px 10px #bdc3c7;
+  cursor: pointer;
 }
 .book_name:hover {
   background-color: #22a6b3 ;

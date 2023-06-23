@@ -8,6 +8,7 @@ export default function Layout({children}) {
         <Seo />
          <Nav />
          <main>{children}</main> 
+
         <style jsx global>{`
             main {
                 max-width: 700px; 
@@ -15,10 +16,9 @@ export default function Layout({children}) {
                        padding: 40px 30px;
                        margin-top: 30px;
                        box-shadow: 5px 5px 30px #bdc3c7;
-                       min-height: 700px;
+                       min-height: 10vh;
+                       margin-bottom: 50px;
             }
-    
-     
             `}
             
         </style>
