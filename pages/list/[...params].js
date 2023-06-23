@@ -2,41 +2,51 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 
-export default function Id() {
-const router = useRouter()
-const {id} = router.query;
+export default function Detail( {params}) {
+const [title, id] = params || [];
 const [lists, setList] = useState([])
-
+const onNavigate = (url) => {
+location.assign(url)
+}
 useEffect(()=> {
     (async () => {
-       await (await fetch(`https://books-api.nomadcoders.workers.dev/list?name=hardcover-fiction`)).json()
-       .then(json =>setList(json.results))
-
-
+       await (await fetch(`https://books-api.nomadcoders.workers.dev/list?name=${id}`)).json()
+       .then(json => 
+        setList(json.results)
+        )
     })()
 },[])
     
+
+useEffect(()=> {
+    localStorage.setItem("list",JSON.stringify(lists))
+},[])
+
     return (
         <div>
-           <h2>{id}</h2>
-           <div className="detail">
+           <h2>{title}</h2>
+
+            <div className="detail">
            {lists.books?.map((book)=> (
            <div className="item" key={book.rank}>
             <div className="book_image" />
                 <img src={book.book_image} alt={book.title}/>
                <span>{book.title}</span>
                <p>{book.author}</p>
-               <button >Buy now ➡️ </button>
+               <button onClick={()=> onNavigate(book["amazon_product_url"])}>Buy now ➡️ </button>
            </div>
            
-           ))}
-           </div>
-
+           )) || <div className="loading">loading...</div> } </div>  
 
            <style jsx>{`
-
+           .loading {
+            padding: 70px;
+            text-align: center;
+            font-size: 30px;
+           }
             h2 {
-                font-size: 40px;
+                font-size: 2.5em;
+                text-align: center;
             }
             .detail {
                 display: grid;
@@ -80,3 +90,9 @@ useEffect(()=> {
     );
 }
 
+export function getServerSideProps( {params : {params}}) {
+
+    return {
+        props : {params,},
+    }
+}
