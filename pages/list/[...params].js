@@ -1,6 +1,4 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
 
 export default function Detail( {params}) {
 const [title, id] = params || [];
@@ -18,20 +16,15 @@ useEffect(()=> {
 },[])
     
 
-useEffect(()=> {
-    localStorage.setItem("list",JSON.stringify(lists))
-},[])
-
     return (
         <div>
            <h2>{title}</h2>
-
             <div className="detail">
            {lists.books?.map((book)=> (
            <div className="item" key={book.rank}>
             <div className="book_image" />
                 <img src={book.book_image} alt={book.title}/>
-               <span>{book.title}</span>
+               <span>{`${book.rank}. ${book.title}`}</span>
                <p>{book.author}</p>
                <button onClick={()=> onNavigate(book["amazon_product_url"])}>Buy now ➡️ </button>
            </div>
@@ -53,13 +46,13 @@ useEffect(()=> {
                  grid-template-columns: repeat(3,1fr);
                  gap: 10px
             }
-        
+     
             .item {
                
                 height: 500px;
                display: flex;
                flex-flow: column;
-    
+                position: relative;
                justify-content: space-between;
             }    
             img {
@@ -81,8 +74,8 @@ useEffect(()=> {
 
             button:hover {
                 background-color: #22a6b3 ;
-  color: #FFFFFF;
-  transition: all 0.5s ease-out;
+                color: #FFFFFF;
+                transition: all 0.5s ease-out;
             }
             `}
            </style>
